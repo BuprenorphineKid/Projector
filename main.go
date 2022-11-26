@@ -6,14 +6,16 @@ import (
 )
 
 func main() {
-  a := os.Args
-  def := make([]string, 3, 3)
-  def[0] = "help"
-  def[1] = "init"
-  def[2] = "default"
+  def := []string{"help", "init", "default"}
 
-  if len(a) != len(def) {
-    a = append(a, def[len(a) - 1:]...)
+  a := os.Args
+
+  args := make([]string, len(a[1:]))
+
+  if len(args) != 0 {
+    copy(def[len(args) - 1:], args[len(args) - 1:])
+    cli.Args(args...)
   }
-  cli.Args(a...)
+
+  cli.Args(def...)
 }
